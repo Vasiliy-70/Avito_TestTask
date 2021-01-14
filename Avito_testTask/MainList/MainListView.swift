@@ -9,6 +9,8 @@ import UIKit
 
 final class MainListView: UIView {
 	private let closeButtonImage = UIImageView()
+	private let listCollection = UICollectionView()
+	private let collectionViewController: IMainListCollectionViewController?
 	
 	private enum Constraints {
 		static let closeButtonImageWidth: CGFloat = 52
@@ -16,7 +18,8 @@ final class MainListView: UIView {
 		static let closeButtonImageOffset: CGFloat = 10
 	}
 	
-	init() {
+	init(collectionViewController: IMainListCollectionViewController) {
+		self.collectionViewController = collectionViewController
 		super.init(frame: .zero)
 		
 		self.setupViewAppearance()
@@ -40,8 +43,8 @@ private extension MainListView {
 		self.closeButtonImage.translatesAutoresizingMaskIntoConstraints = false
 		
 		NSLayoutConstraint.activate([
-			self.closeButtonImage.topAnchor.constraint(equalTo: self.topAnchor, constant: Constraints.closeButtonImageOffset),
-			self.closeButtonImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constraints.closeButtonImageOffset),
+			self.closeButtonImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constraints.closeButtonImageOffset),
+			self.closeButtonImage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: Constraints.closeButtonImageOffset),
 			self.closeButtonImage.widthAnchor.constraint(equalToConstant: Constraints.closeButtonImageWidth),
 			self.closeButtonImage.heightAnchor.constraint(equalToConstant: Constraints.closeButtonImageHeight)
 		])
