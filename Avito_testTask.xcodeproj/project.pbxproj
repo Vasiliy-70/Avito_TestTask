@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4704FE6E25B0190A00E8A255 /* MainListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4704FE6D25B0190A00E8A255 /* MainListCollectionViewCell.swift */; };
+		4704FE7425B1756700E8A255 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4704FE7325B1756700E8A255 /* Images.swift */; };
+		470D4F1D25B1E2B9001175D7 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D4F1C25B1E2B9001175D7 /* ListModel.swift */; };
 		47C57CAA25AF4C7400F70AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C57CA925AF4C7400F70AE2 /* AppDelegate.swift */; };
 		47C57CAC25AF4C7400F70AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C57CAB25AF4C7400F70AE2 /* SceneDelegate.swift */; };
 		47C57CB325AF4C7600F70AE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C57CB225AF4C7600F70AE2 /* Assets.xcassets */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		4704FE6D25B0190A00E8A255 /* MainListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainListCollectionViewCell.swift; path = ../../../Avito_testTask/Avito_testTask/MainList/MainListCollectionViewCell.swift; sourceTree = "<group>"; };
+		4704FE7325B1756700E8A255 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		470D4F1C25B1E2B9001175D7 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		47C57CA625AF4C7400F70AE2 /* Avito_testTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avito_testTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C57CA925AF4C7400F70AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47C57CAB25AF4C7400F70AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4704FE7225B1755C00E8A255 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4704FE7325B1756700E8A255 /* Images.swift */,
+				470D4F1C25B1E2B9001175D7 /* ListModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		47C57C9D25AF4C7400F70AE2 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +75,7 @@
 		47C57CA825AF4C7400F70AE2 /* Avito_testTask */ = {
 			isa = PBXGroup;
 			children = (
+				4704FE7225B1755C00E8A255 /* Models */,
 				47C57CC125AF517100F70AE2 /* MainList */,
 				47C57CBF25AF4C8200F70AE2 /* Application */,
 				47C57CBE25AF4C7C00F70AE2 /* Resources */,
@@ -169,11 +183,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470D4F1D25B1E2B9001175D7 /* ListModel.swift in Sources */,
 				47C57CCD25AF51E000F70AE2 /* MainListAssembly.swift in Sources */,
 				47C57CC725AF51B900F70AE2 /* MainListView.swift in Sources */,
 				47C57CCA25AF51D000F70AE2 /* MainListPresenter.swift in Sources */,
 				47C57CAA25AF4C7400F70AE2 /* AppDelegate.swift in Sources */,
 				47C57CAC25AF4C7400F70AE2 /* SceneDelegate.swift in Sources */,
+				4704FE7425B1756700E8A255 /* Images.swift in Sources */,
 				4704FE6E25B0190A00E8A255 /* MainListCollectionViewCell.swift in Sources */,
 				47C57CC325AF51A500F70AE2 /* MainListViewController.swift in Sources */,
 			);
