@@ -9,8 +9,10 @@ import UIKit
 enum MainListAssembly {
 	static func createMainListModule() -> UIViewController {
 		let view = MainListViewController()
-		let presenter = MainListPresenter()
+		let interactor = MainListInteractor()
+		let presenter = MainListPresenter(view: view, interactor: interactor)
 		view.presenter = presenter
+		interactor.presenter = presenter
 		return view
 	}
 }

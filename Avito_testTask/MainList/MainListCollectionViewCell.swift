@@ -11,7 +11,7 @@ protocol IMainListCollectionViewCell {
 	var title: String? { get set}
 	var descriptionText: String? { get set}
 	var price: String? { get set}
-	var icon: UIImage? { get set }
+	var iconPath: String? { get set }
 	var selectedState: Bool { get set}
 	
 	func updateContent()
@@ -71,7 +71,7 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 
 private extension MainListCollectionViewCell {
 	func setupAppearance() {
-		self.backgroundColor = .blue
+		self.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
 		
 		self.setupLabelView()
 		self.setupImageView()
@@ -206,12 +206,14 @@ extension MainListCollectionViewCell: IMainListCollectionViewCell {
 		}
 	}
 	
-	var icon: UIImage? {
+	var iconPath: String? {
 		get {
-			self.iconImage.image
+			return nil
 		}
 		set {
-			self.iconImage.image = newValue
+			if let url = newValue {
+				self.iconImage.imageFromServerURL(urlString: url)
+			}
 		}
 	}
 	

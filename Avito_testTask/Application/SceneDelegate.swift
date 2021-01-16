@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window.windowScene = windowScene
 		
 		let navigationController = UINavigationController()
-		navigationController.viewControllers = [MainListAssembly.createMainListModule()]
+		let mainListRouter = MainListRouter(navigationController: navigationController)
+		mainListRouter.showMainList()
 		
 		window.rootViewController = navigationController
 		window.makeKeyAndVisible()

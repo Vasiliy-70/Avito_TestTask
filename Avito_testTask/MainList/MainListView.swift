@@ -7,28 +7,30 @@
 
 import UIKit
 
-protocol IMainListView {
-	func reloadTable()
+protocol IMainListViewType {
+	func selectButton(enabled: Bool)
+	func set(title: String?, selectedButtonTitle: String?)
 }
 
 final class MainListView: UIView {
-	private let closeButtonImage = UIImageView()
+	private let closeButton = UIButton()
 	private let titleLabel = UILabel()
 	private let selectButton = UIButton()
 	private let listCollection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-	private let collectionViewController: IMainListCollectionViewController
+	private let viewController: IMainListCollectionViewController
 	
 	private enum Constraints {
 		static let closeButtonImageWidth: CGFloat = 20
 		static let closeButtonImageHeight: CGFloat = 20
 		static let closeButtonImageOffset: CGFloat = 10
 		
-		static let titleLabelOffset: CGFloat = 10
+		static let titleLabelOffset: CGFloat = 40
 		
 		static let buttonSelectHeight: CGFloat = 50
 		static let buttonSelectOffset: CGFloat = 10
 
-		static let listCollectionOffset: CGFloat = 10
+		static let listCollectionHorizontalOffset: CGFloat = 10
+		static let listCollectionTopOffset: CGFloat = 25
 	}
 	
 	private enum Constants {
@@ -42,10 +44,10 @@ final class MainListView: UIView {
 	}
 	
 	init(collectionViewController: IMainListCollectionViewController) {
-		self.collectionViewController = collectionViewController
+		self.viewController = collectionViewController
 		super.init(frame: .zero)
 		
-		self.setupAppearance()
+		self.configureView()
 		self.setupConstraints()
 	}
 	
@@ -54,28 +56,24 @@ final class MainListView: UIView {
 	}
 }
 
-// MARK: SetupAppearance
+// MARK: SetupView
 
 private extension MainListView {
-	func setupAppearance() {
-		self.backgroundColor = .red
+	func configureView() {
+		self.backgroundColor = .white
 		
-		self.setupImageView()
-		self.setupCollectionView()
-		self.setupButtonsView()
-		self.setupLabelsView()
+		self.configureCollectionView()
+		self.configureButtons()
+		self.configureLabels()
 	}
 	
-	func setupImageView() {
-		self.closeButtonImage.contentMode = .scaleAspectFit
-		self.closeButtonImage.image = Images.closeIcon
-	}
-	
-	func setupCollectionView() {
-		self.listCollection.register(MainListCollectionViewCell.self, forCellWithReuseIdentifier: self.collectionViewController.cellIdentifier)
+	func configureCollectionView() {
+		self.listCollection.backgroundColor = .white
+		
+		self.listCollection.register(MainListCollectionViewCell.self, forCellWithReuseIdentifier: self.viewController.cellIdentifier)
 
-		self.listCollection.delegate = self.collectionViewController.delegate
-		self.listCollection.dataSource = self.collectionViewController.dataSource
+		self.listCollection.delegate = self.viewController.delegate
+		self.listCollection.dataSource = self.viewController.dataSource
 		
 		let layoutListCollection: UICollectionViewFlowLayout = {
 			let layout = UICollectionViewFlowLayout()
@@ -86,18 +84,31 @@ private extension MainListView {
 		self.listCollection.collectionViewLayout = layoutListCollection
 	}
 	
-	func setupButtonsView() {
-		self.selectButton.setTitle("Выбрать", for: .normal)
+	func configureButtons() {
+		self.selectButton.startAnimatingPressActions()
+		self.selectButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+		self.selectButton.isEnabled = false
+		self.selectButton.isHidden = true
 		self.selectButton.layer.borderWidth = Constants.selectButtonBorderWidth
 		self.selectButton.layer.cornerRadius = Constants.selectButtonCornerRadius
-		self.selectButton.backgroundColor = .blue
+		self.selectButton.addTarget(self, action: #selector(selectButtonTap), for: .touchUpInside)
+		
+		self.closeButton.setImage(Images.closeIcon, for: .normal)
+		self.closeButton.isEnabled = false
 	}
 	
-	func setupLabelsView() {
+	func configureLabels() {
 		self.titleLabel.font = Constants.titleLabelFont
 		self.titleLabel.textAlignment = .left
 		self.titleLabel.numberOfLines = Constants.titleLabelNumberOfLines
-		self.titleLabel.text = "Сделайте объявление заметнее на 7 дней"
+	}
+}
+
+// MARK: Action
+
+private extension MainListView {
+	@objc func selectButtonTap() {
+		self.viewController.selectButtonTap()
 	}
 }
 
@@ -113,14 +124,14 @@ private extension MainListView {
 	}
 	
 	func setupImageConstraints() {
-		self.addSubview(self.closeButtonImage)
-		self.closeButtonImage.translatesAutoresizingMaskIntoConstraints = false
+		self.addSubview(self.closeButton)
+		self.closeButton.translatesAutoresizingMaskIntoConstraints = false
 		
 		NSLayoutConstraint.activate([
-			self.closeButtonImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constraints.closeButtonImageOffset),
-			self.closeButtonImage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: Constraints.closeButtonImageOffset),
-			self.closeButtonImage.widthAnchor.constraint(equalToConstant: Constraints.closeButtonImageWidth),
-			self.closeButtonImage.heightAnchor.constraint(equalToConstant: Constraints.closeButtonImageHeight)
+			self.closeButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constraints.closeButtonImageOffset),
+			self.closeButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: Constraints.closeButtonImageOffset),
+			self.closeButton.widthAnchor.constraint(equalToConstant: Constraints.closeButtonImageWidth),
+			self.closeButton.heightAnchor.constraint(equalToConstant: Constraints.closeButtonImageHeight)
 		])
 	}
 	
@@ -129,10 +140,10 @@ private extension MainListView {
 		self.listCollection.translatesAutoresizingMaskIntoConstraints = false
 		
 		NSLayoutConstraint.activate([
-			self.listCollection.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: Constraints.listCollectionOffset),
-			self.listCollection.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: Constraints.listCollectionOffset),
-			self.listCollection.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -Constraints.listCollectionOffset),
-			self.listCollection.bottomAnchor.constraint(equalTo: self.selectButton.topAnchor, constant: -Constraints.listCollectionOffset)
+			self.listCollection.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: Constraints.listCollectionTopOffset),
+			self.listCollection.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: Constraints.listCollectionHorizontalOffset),
+			self.listCollection.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -Constraints.listCollectionHorizontalOffset),
+			self.listCollection.bottomAnchor.constraint(equalTo: self.selectButton.topAnchor, constant: -Constraints.listCollectionHorizontalOffset)
 		])
 	}
 	
@@ -153,8 +164,8 @@ private extension MainListView {
 		
 		self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			self.titleLabel.topAnchor.constraint(equalTo: self.closeButtonImage.bottomAnchor, constant: Constraints.titleLabelOffset),
-			self.titleLabel.leadingAnchor.constraint(equalTo: self.closeButtonImage.leadingAnchor),
+			self.titleLabel.topAnchor.constraint(equalTo: self.closeButton.bottomAnchor, constant: Constraints.titleLabelOffset),
+			self.titleLabel.leadingAnchor.constraint(equalTo: self.closeButton.leadingAnchor),
 			self.titleLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -Constraints.titleLabelOffset)
 		])
 	}
@@ -162,9 +173,19 @@ private extension MainListView {
 
 // MARK: IMainListView
 
-extension MainListView: IMainListView {
-	func reloadTable() {
-//		self.setupCollectionView()
-//		self.listCollection.reloadData()
+extension MainListView: IMainListViewType {
+	func selectButton(enabled: Bool) {
+		self.selectButton.backgroundColor = enabled ? .blue : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+		self.selectButton.isEnabled = enabled ? true : false
+	}
+
+	func set(title: String?, selectedButtonTitle: String?) {
+		self.titleLabel.text = title
+		self.selectButton.setTitle(selectedButtonTitle, for: .normal)
+		if self.selectButton.title(for: .normal) != "" {
+			self.selectButton.isHidden = false
+		}
+		
+		self.listCollection.reloadData()
 	}
 }

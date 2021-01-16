@@ -9,7 +9,13 @@
 /* Begin PBXBuildFile section */
 		4704FE6E25B0190A00E8A255 /* MainListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4704FE6D25B0190A00E8A255 /* MainListCollectionViewCell.swift */; };
 		4704FE7425B1756700E8A255 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4704FE7325B1756700E8A255 /* Images.swift */; };
-		470D4F1D25B1E2B9001175D7 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D4F1C25B1E2B9001175D7 /* ListModel.swift */; };
+		470D4F1D25B1E2B9001175D7 /* MainListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D4F1C25B1E2B9001175D7 /* MainListViewData.swift */; };
+		47107E3125B309E40065B3D9 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47107E3025B309E40065B3D9 /* UIImageViewExtension.swift */; };
+		47107E3425B336CD0065B3D9 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47107E3325B336CC0065B3D9 /* UIButtonExtension.swift */; };
+		47107E3725B33D5D0065B3D9 /* MainListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47107E3625B33D5D0065B3D9 /* MainListRouter.swift */; };
+		47B8826B25B2BDE1005BA510 /* MainListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8826A25B2BDE1005BA510 /* MainListInteractor.swift */; };
+		47B8826E25B2BE2D005BA510 /* MainListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8826D25B2BE2D005BA510 /* MainListEntity.swift */; };
+		47B8827925B2CEDD005BA510 /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8827825B2CEDD005BA510 /* QueryService.swift */; };
 		47C57CAA25AF4C7400F70AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C57CA925AF4C7400F70AE2 /* AppDelegate.swift */; };
 		47C57CAC25AF4C7400F70AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C57CAB25AF4C7400F70AE2 /* SceneDelegate.swift */; };
 		47C57CB325AF4C7600F70AE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C57CB225AF4C7600F70AE2 /* Assets.xcassets */; };
@@ -23,7 +29,13 @@
 /* Begin PBXFileReference section */
 		4704FE6D25B0190A00E8A255 /* MainListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainListCollectionViewCell.swift; path = ../../../Avito_testTask/Avito_testTask/MainList/MainListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4704FE7325B1756700E8A255 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
-		470D4F1C25B1E2B9001175D7 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
+		470D4F1C25B1E2B9001175D7 /* MainListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewData.swift; sourceTree = "<group>"; };
+		47107E3025B309E40065B3D9 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
+		47107E3325B336CC0065B3D9 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		47107E3625B33D5D0065B3D9 /* MainListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListRouter.swift; sourceTree = "<group>"; };
+		47B8826A25B2BDE1005BA510 /* MainListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListInteractor.swift; sourceTree = "<group>"; };
+		47B8826D25B2BE2D005BA510 /* MainListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListEntity.swift; sourceTree = "<group>"; };
+		47B8827825B2CEDD005BA510 /* QueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryService.swift; sourceTree = "<group>"; };
 		47C57CA625AF4C7400F70AE2 /* Avito_testTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avito_testTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C57CA925AF4C7400F70AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47C57CAB25AF4C7400F70AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,9 +63,25 @@
 			isa = PBXGroup;
 			children = (
 				4704FE7325B1756700E8A255 /* Images.swift */,
-				470D4F1C25B1E2B9001175D7 /* ListModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		47107E2F25B309BA0065B3D9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				47107E3025B309E40065B3D9 /* UIImageViewExtension.swift */,
+				47107E3325B336CC0065B3D9 /* UIButtonExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		47B8827725B2CEC3005BA510 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				47B8827825B2CEDD005BA510 /* QueryService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		47C57C9D25AF4C7400F70AE2 = {
@@ -75,6 +103,8 @@
 		47C57CA825AF4C7400F70AE2 /* Avito_testTask */ = {
 			isa = PBXGroup;
 			children = (
+				47107E2F25B309BA0065B3D9 /* Extensions */,
+				47B8827725B2CEC3005BA510 /* Networking */,
 				4704FE7225B1755C00E8A255 /* Models */,
 				47C57CC125AF517100F70AE2 /* MainList */,
 				47C57CBF25AF4C8200F70AE2 /* Application */,
@@ -106,8 +136,12 @@
 			isa = PBXGroup;
 			children = (
 				47C57CC625AF51B900F70AE2 /* MainListView.swift */,
+				470D4F1C25B1E2B9001175D7 /* MainListViewData.swift */,
 				47C57CC225AF51A500F70AE2 /* MainListViewController.swift */,
 				47C57CC925AF51D000F70AE2 /* MainListPresenter.swift */,
+				47B8826A25B2BDE1005BA510 /* MainListInteractor.swift */,
+				47107E3625B33D5D0065B3D9 /* MainListRouter.swift */,
+				47B8826D25B2BE2D005BA510 /* MainListEntity.swift */,
 				47C57CCC25AF51E000F70AE2 /* MainListAssembly.swift */,
 				4704FE6D25B0190A00E8A255 /* MainListCollectionViewCell.swift */,
 			);
@@ -183,14 +217,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				470D4F1D25B1E2B9001175D7 /* ListModel.swift in Sources */,
+				47107E3725B33D5D0065B3D9 /* MainListRouter.swift in Sources */,
+				470D4F1D25B1E2B9001175D7 /* MainListViewData.swift in Sources */,
 				47C57CCD25AF51E000F70AE2 /* MainListAssembly.swift in Sources */,
 				47C57CC725AF51B900F70AE2 /* MainListView.swift in Sources */,
 				47C57CCA25AF51D000F70AE2 /* MainListPresenter.swift in Sources */,
+				47B8827925B2CEDD005BA510 /* QueryService.swift in Sources */,
 				47C57CAA25AF4C7400F70AE2 /* AppDelegate.swift in Sources */,
+				47B8826B25B2BDE1005BA510 /* MainListInteractor.swift in Sources */,
 				47C57CAC25AF4C7400F70AE2 /* SceneDelegate.swift in Sources */,
 				4704FE7425B1756700E8A255 /* Images.swift in Sources */,
+				47B8826E25B2BE2D005BA510 /* MainListEntity.swift in Sources */,
 				4704FE6E25B0190A00E8A255 /* MainListCollectionViewCell.swift in Sources */,
+				47107E3425B336CD0065B3D9 /* UIButtonExtension.swift in Sources */,
+				47107E3125B309E40065B3D9 /* UIImageViewExtension.swift in Sources */,
 				47C57CC325AF51A500F70AE2 /* MainListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

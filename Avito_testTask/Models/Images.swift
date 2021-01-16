@@ -9,5 +9,5 @@ import UIKit
 
 enum Images {
 	static let closeIcon = UIImage(named: "closeIcon")
-	static let selectedIcon = UIImage(named: "selectedIcon")
+	static let selectedIcon = UIImage(named: "checkmark")
 }
