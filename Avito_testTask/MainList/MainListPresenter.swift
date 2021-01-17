@@ -18,6 +18,7 @@ protocol IMainListPresenterType: class {
 final class MainListPresenter {
 	private weak var view: IMainListView?
 	private var interactor: IMainListInteractor
+	private var router: IMainListRouter
 	private var entityModel = MainListEntity() {
 		didSet {
 			self.viewInfo.title = self.entityModel.result?.title
@@ -26,10 +27,8 @@ final class MainListPresenter {
 			if let list = self.entityModel.result?.list {
 				var listItems = [ListItem]()
 				for item in list {
-					print(item.description)
 					if (item.isSelected ?? false) {
 						let listItem = ListItem(title: item.title, description: item.description, price: item.price, iconPath: item.icon?.url, selectedState: false)
-						print(listItem)
 						listItems.append(listItem)
 					}
 				}
@@ -46,9 +45,10 @@ final class MainListPresenter {
 		}
 	}
 	
-	init(view: IMainListView, interactor: IMainListInteractor) {
+	init(view: IMainListView, interactor: IMainListInteractor, router: IMainListRouter) {
 		self.view = view
 		self.interactor = interactor
+		self.router = router
 		self.interactor.loadData()
 	}
 }

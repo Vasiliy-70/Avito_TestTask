@@ -28,7 +28,7 @@ extension MainListRouter: IMainListRouter {
 			return
 		}
 		
-		let mainListViewController = MainListAssembly.createMainListModule()
+		let mainListViewController = MainListAssembly.createMainListModule(router: self)
 		navigationController.pushViewController(mainListViewController, animated: true)
 	}
 }

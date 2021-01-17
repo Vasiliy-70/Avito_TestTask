@@ -7,10 +7,10 @@
 import UIKit
 
 enum MainListAssembly {
-	static func createMainListModule() -> UIViewController {
+	static func createMainListModule(router: IMainListRouter) -> UIViewController {
 		let view = MainListViewController()
 		let interactor = MainListInteractor()
-		let presenter = MainListPresenter(view: view, interactor: interactor)
+		let presenter = MainListPresenter(view: view, interactor: interactor, router: router)
 		view.presenter = presenter
 		interactor.presenter = presenter
 		return view

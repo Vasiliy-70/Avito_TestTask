@@ -23,7 +23,6 @@ private extension MainListInteractor {
 		
 		do {
 			entityModel = try JSONDecoder().decode(MainListEntity.self, from: data)
-			print(entityModel)
 		} catch let error {
 			errorDescription = error.localizedDescription
 		}
@@ -48,7 +47,6 @@ extension MainListInteractor: IMainListInteractor {
 			if error == "" {
 				let entity = self.JSONParse(data: data)
 				entityModel = entity.0
-				print(entityModel)
 				errorDescription = entity.1
 			} else {
 				errorDescription = error

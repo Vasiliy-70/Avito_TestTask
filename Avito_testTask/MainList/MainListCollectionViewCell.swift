@@ -24,6 +24,12 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 	private var selectedStateImage = UIImageView()
 	private var priceLabel = UILabel()
 
+	lazy var width: NSLayoutConstraint = {
+		let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+		width.isActive = true
+		return width
+	}()
+	
 	private enum Constants {
 		static let titleLabelFont : UIFont = .boldSystemFont(ofSize: 22)
 		static let descriptionLabelFont: UIFont = .systemFont(ofSize: 16)
@@ -32,6 +38,8 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 		static let titleLabelNumberOfLines = 2
 		static let descriptionLabelNumberOfLines = 0
 		static let priceLabelNumberOfLines = 1
+		
+		static let cellCornerRadius: CGFloat = 10.0
 	}
 	
 	private enum Constraints {
@@ -60,8 +68,6 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 	}
 	
 	override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-		let width: NSLayoutConstraint = self.contentView.widthAnchor.constraint(equalToConstant: self.bounds.size.width)
-		width.isActive = true
 		width.constant = self.bounds.size.width
 		return self.contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
 	}
@@ -72,7 +78,6 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 private extension MainListCollectionViewCell {
 	func setupAppearance() {
 		self.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-		
 		self.setupLabelView()
 		self.setupImageView()
 		self.setupContentView()
@@ -99,7 +104,9 @@ private extension MainListCollectionViewCell {
 	}
 	
 	func setupContentView() {
-//		self.contentView.layer.cornerRadius = 5
+		self.contentView.layer.cornerRadius = Constants.cellCornerRadius
+		self.contentView.layer.masksToBounds = true
+		self.layer.cornerRadius = Constants.cellCornerRadius
 	}
 }
 
@@ -130,15 +137,13 @@ private extension MainListCollectionViewCell {
 		NSLayoutConstraint.activate([
 			self.descriptionLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: Constraints.descriptionLabelOffset),
 			self.descriptionLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-			self.descriptionLabel.trailingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor),
-//			self.descriptionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constraints.descriptionLabelOffset)
+			self.descriptionLabel.trailingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor)
 		])
 		
 		NSLayoutConstraint.activate([
 			self.priceLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: Constraints.priceLabelOffset),
 			self.priceLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-			self.priceLabel.trailingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor),
-//			self.priceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constraints.priceLabelOffset)
+			self.priceLabel.trailingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor)
 		])
 	}
 	
@@ -169,8 +174,8 @@ private extension MainListCollectionViewCell {
 		
 		NSLayoutConstraint.activate([
 			self.contentView.bottomAnchor.constraint(equalTo: self.priceLabel.bottomAnchor),
-			self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-			self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constraints.selectedStateImageOffset)
+//			self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//			self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
 		])
 		
 	}

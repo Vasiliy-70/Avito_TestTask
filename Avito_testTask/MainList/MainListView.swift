@@ -40,7 +40,7 @@ final class MainListView: UIView {
 		static let titleLabelNumberOfLines = 2
 		
 		static let selectButtonBorderWidth: CGFloat = 1
-		static let selectButtonCornerRadius: CGFloat = 5
+		static let selectButtonCornerRadius: CGFloat = 10
 	}
 	
 	init(collectionViewController: IMainListCollectionViewController) {
@@ -120,7 +120,6 @@ private extension MainListView {
 		self.setupButtonsConstraints()
 		self.setupLabelsConstraints()
 		self.setupCollectionViewConstraints()
-		
 	}
 	
 	func setupImageConstraints() {

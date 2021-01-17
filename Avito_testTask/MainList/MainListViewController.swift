@@ -26,22 +26,34 @@ final class MainListViewController: UIViewController {
 	var presenter: IMainListPresenter?
 	private var cellId = "cellId"
 	
+	private var layout: UICollectionViewFlowLayout = {
+		let layout = UICollectionViewFlowLayout()
+		let width = UIScreen.main.bounds.size.width
+		layout.estimatedItemSize = CGSize(width: width, height: 10)
+		return layout
+	}()
+	
 	private enum Constants {
 		static let collectionCellWidth: CGFloat = UIScreen.main.bounds.width
 		static let collectionCellHeight: CGFloat = 300
 		static let cellSpacing: CGFloat = 10
 	}
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
+	override func viewDidLoad() {
+		super.viewDidLoad()
+	}
+	
 	override func loadView() {
 		self.view = MainListView(collectionViewController: self)
 	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
+		super.traitCollectionDidChange(previousTraitCollection)
+	}
 }
 
-// MARK: UICollectionViewDelegate
+// MARK: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 
 extension MainListViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -53,6 +65,23 @@ extension MainListViewController: UICollectionViewDelegate, UICollectionViewDele
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+	}
+	
+	func collectionView(_ collectionView: UICollectionView,
+						layout collectionViewLayout: UICollectionViewLayout,
+						sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let referenceHeight: CGFloat = 54.0
+		var referenceWidth: CGFloat = 100.0
+		
+		if let sectionInset = (collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset {
+			referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
+				- sectionInset.left
+				- sectionInset.right
+				- collectionView.contentInset.left
+				- collectionView.contentInset.right
+		}
+		
+		return CGSize(width: referenceWidth, height: referenceHeight)
 	}
 }
 
@@ -74,6 +103,7 @@ extension MainListViewController: UICollectionViewDataSource {
 		cell.price = self.presenter?.listContent?.listItems?[indexPath.row].price
 		cell.iconPath = self.presenter?.listContent?.listItems?[indexPath.row].iconPath
 		cell.selectedState = self.presenter?.listContent?.listItems?[indexPath.row].selectedState ?? false
+		
 		return cell as? UICollectionViewCell ?? UICollectionViewCell()
 	}
 }
