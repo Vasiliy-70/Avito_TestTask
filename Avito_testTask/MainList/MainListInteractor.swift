@@ -12,7 +12,7 @@ protocol IMainListInteractor: class {
 
 final class MainListInteractor {
 	private var queryService: IQueryService = QueryService()
-	weak var presenter: IMainListPresenterType?
+	weak var presenter: IMainListPresenterData?
 	private var url = "https://raw.githubusercontent.com/avito-tech/internship/main/result.json"
 }
 
@@ -22,7 +22,8 @@ private extension MainListInteractor {
 		var entityModel = MainListEntity()
 		
 		do {
-			entityModel = try JSONDecoder().decode(MainListEntity.self, from: data)
+			entityModel = try JSONDecoder().decode(MainListEntity.self,
+												   from: data)
 		} catch let error {
 			errorDescription = error.localizedDescription
 		}
@@ -39,7 +40,8 @@ extension MainListInteractor: IMainListInteractor {
 		var errorDescription = ""
 		
 		guard let url = URL(string: self.url) else {
-			self.presenter?.setData(entityModel: entityModel, error: "URL is not correct")
+			self.presenter?.setData(entityModel: entityModel,
+									error: "URL is not correct")
 			return
 		}
 
@@ -51,7 +53,8 @@ extension MainListInteractor: IMainListInteractor {
 			} else {
 				errorDescription = error
 			}
-			self.presenter?.setData(entityModel: entityModel, error: errorDescription)
+			self.presenter?.setData(entityModel: entityModel,
+									error: errorDescription)
 		}
 	}
 }

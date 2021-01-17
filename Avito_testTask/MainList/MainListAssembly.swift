@@ -10,7 +10,9 @@ enum MainListAssembly {
 	static func createMainListModule(router: IMainListRouter) -> UIViewController {
 		let view = MainListViewController()
 		let interactor = MainListInteractor()
-		let presenter = MainListPresenter(view: view, interactor: interactor, router: router)
+		let presenter = MainListPresenter(view: view,
+										  interactor: interactor,
+										  router: router)
 		view.presenter = presenter
 		interactor.presenter = presenter
 		return view

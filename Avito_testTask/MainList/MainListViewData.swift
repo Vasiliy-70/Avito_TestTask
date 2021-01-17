@@ -7,7 +7,8 @@
 
 struct MainListViewData {
 	var title: String?
-	var selectedActionTitle: String?
+	var selectActionTitle: (selected: String?, notSelected: String?)
+	var selectedState: Bool?
 	var listItems: [ListItem]?
 }
 
@@ -16,5 +17,5 @@ struct ListItem {
 	var description: String?
 	var price: String?
 	var iconPath: String?
-	var selectedState: Bool
+	var isSelected: Bool
 }

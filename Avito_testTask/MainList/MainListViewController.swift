@@ -16,11 +16,9 @@ protocol IMainListCollectionViewController: class {
 }
 
 protocol IMainListView: class {
-	var selectedState: Bool? { get set }
 	func updateInfo()
 	func showAlert(title: String, description: String)
 }
-
 
 final class MainListViewController: UIViewController {
 	var presenter: IMainListPresenter?
@@ -48,7 +46,8 @@ final class MainListViewController: UIViewController {
 	}
 	
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-		layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
+		self.layout.estimatedItemSize = CGSize(width: view.bounds.size.width,
+											   height: 10)
 		super.traitCollectionDidChange(previousTraitCollection)
 	}
 }
@@ -56,11 +55,14 @@ final class MainListViewController: UIViewController {
 // MARK: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 
 extension MainListViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+	func collectionView(_ collectionView: UICollectionView,
+						didSelectItemAt indexPath: IndexPath) {
 		self.presenter?.checkmark(item: indexPath.row)
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+	func collectionView(_ collectionView: UICollectionView,
+						layout collectionViewLayout: UICollectionViewLayout,
+						minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 		return Constants.cellSpacing
 	}
 	
@@ -88,8 +90,9 @@ extension MainListViewController: UICollectionViewDelegate, UICollectionViewDele
 // MARK: UICollectionViewDataSource
 
 extension MainListViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return self.presenter?.listContent?.listItems?.count ?? 0
+	func collectionView(_ collectionView: UICollectionView,
+						numberOfItemsInSection section: Int) -> Int {
+		return self.presenter?.viewData?.listItems?.count ?? 0
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -98,11 +101,11 @@ extension MainListViewController: UICollectionViewDataSource {
 			return UICollectionViewCell()
 		}
 		
-		cell.title = self.presenter?.listContent?.listItems?[indexPath.row].title
-		cell.descriptionText = self.presenter?.listContent?.listItems?[indexPath.row].description
-		cell.price = self.presenter?.listContent?.listItems?[indexPath.row].price
-		cell.iconPath = self.presenter?.listContent?.listItems?[indexPath.row].iconPath
-		cell.selectedState = self.presenter?.listContent?.listItems?[indexPath.row].selectedState ?? false
+		cell.title = self.presenter?.viewData?.listItems?[indexPath.row].title
+		cell.descriptionText = self.presenter?.viewData?.listItems?[indexPath.row].description
+		cell.price = self.presenter?.viewData?.listItems?[indexPath.row].price
+		cell.iconPath = self.presenter?.viewData?.listItems?[indexPath.row].iconPath
+		cell.selectedState = self.presenter?.viewData?.listItems?[indexPath.row].isSelected ?? false
 		
 		return cell as? UICollectionViewCell ?? UICollectionViewCell()
 	}
@@ -131,19 +134,27 @@ extension MainListViewController: IMainListCollectionViewController {
 // MARK: IMainListView
 
 extension MainListViewController: IMainListView {
-	var selectedState: Bool? {
-		get {
-			return false
-		}
-		set {
-			(self.view as? IMainListViewType)?.selectButton(enabled: newValue ?? false)
-		}
-	}
-	
 	func updateInfo() {
-		let title = self.presenter?.listContent?.title
-		let selectedButtonTitle = self.presenter?.listContent?.selectedActionTitle
-		(self.view as? IMainListViewType)?.set(title: title, selectedButtonTitle: selectedButtonTitle)
+		guard let viewData = self.presenter?.viewData else { return }
+		
+		let title = viewData.title
+		let selectedState = viewData.selectedState ?? false
+		let selectedButtonTitle = selectedState ?
+			viewData.selectActionTitle.selected : viewData.selectActionTitle.notSelected
+		
+		var selectedCell: Int? = nil
+		var count = 0
+		if let listItems = viewData.listItems {
+			for item in listItems {
+				if item.isSelected {
+					selectedCell = count
+					break
+				}
+				count += 1
+			}
+		}
+		
+		(self.view as? IMainListViewType)?.updateView(title: title,selectedButtonTitle: selectedButtonTitle, selectedCell: selectedCell)
 	}
 	
 	func showAlert(title: String, description: String) {

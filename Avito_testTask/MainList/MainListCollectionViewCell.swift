@@ -13,8 +13,6 @@ protocol IMainListCollectionViewCell {
 	var price: String? { get set}
 	var iconPath: String? { get set }
 	var selectedState: Bool { get set}
-	
-	func updateContent()
 }
 
 final class MainListCollectionViewCell: UICollectionViewCell {
@@ -24,7 +22,7 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 	private var selectedStateImage = UIImageView()
 	private var priceLabel = UILabel()
 
-	lazy var width: NSLayoutConstraint = {
+	private lazy var width: NSLayoutConstraint = {
 		let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
 		width.isActive = true
 		return width
@@ -54,12 +52,14 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 		static let titleLabelOffset: CGFloat = 10
 		static let descriptionLabelOffset: CGFloat = 10
 		static let priceLabelOffset: CGFloat = 10
+		
+		static let contentViewOffset: CGFloat = 5
 	}
 	
 	override init(frame: CGRect) {
 		super.init(frame: .zero)
 		
-		self.setupAppearance()
+		self.configureView()
 		self.setupConstraints()
 	}
 	
@@ -68,22 +68,22 @@ final class MainListCollectionViewCell: UICollectionViewCell {
 	}
 	
 	override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-		width.constant = self.bounds.size.width
+		self.width.constant = self.bounds.size.width
 		return self.contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
 	}
 }
 
-// MARK: SetupAppearance
+// MARK: SetupView
 
 private extension MainListCollectionViewCell {
-	func setupAppearance() {
+	func configureView() {
 		self.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-		self.setupLabelView()
-		self.setupImageView()
-		self.setupContentView()
+		self.configureLabelView()
+		self.configureImageView()
+		self.configureContentView()
 	}
 	
-	func setupLabelView() {
+	func configureLabelView() {
 		self.titleLabel.font = Constants.titleLabelFont
 		self.titleLabel.textAlignment = .left
 		self.titleLabel.numberOfLines = Constants.titleLabelNumberOfLines
@@ -97,13 +97,13 @@ private extension MainListCollectionViewCell {
 		self.priceLabel.numberOfLines = Constants.priceLabelNumberOfLines
 	}
 	
-	func setupImageView() {
+	func configureImageView() {
 		self.iconImage.contentMode = .scaleAspectFit
 		
 		self.selectedStateImage.contentMode = .scaleAspectFit
 	}
 	
-	func setupContentView() {
+	func configureContentView() {
 		self.contentView.layer.cornerRadius = Constants.cellCornerRadius
 		self.contentView.layer.masksToBounds = true
 		self.layer.cornerRadius = Constants.cellCornerRadius
@@ -173,11 +173,8 @@ private extension MainListCollectionViewCell {
 		self.contentView.translatesAutoresizingMaskIntoConstraints = false
 		
 		NSLayoutConstraint.activate([
-			self.contentView.bottomAnchor.constraint(equalTo: self.priceLabel.bottomAnchor),
-//			self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//			self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+			self.contentView.bottomAnchor.constraint(equalTo: self.priceLabel.bottomAnchor, constant: Constraints.contentViewOffset)
 		])
-		
 	}
 }
 
@@ -229,9 +226,5 @@ extension MainListCollectionViewCell: IMainListCollectionViewCell {
 		set {
 			self.selectedStateImage.image = newValue ? Images.selectedIcon : UIImage()
 		}
-	}
-
-	func updateContent() {
-		self.layoutSubviews()
 	}
 }
